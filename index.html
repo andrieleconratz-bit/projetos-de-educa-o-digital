@@ -64,3 +64,51 @@ class SistemaIrrigacao:
 # Exemplo de Uso
 trator_inteligente = SistemaIrrigacao(umidade_minima=40, capacidade_reservatorio=1000)
 trator_inteligente.monitorar_solo(umidade_atual=35, previsao_chuva="Baixa")
+def calcular_calagem(v2, v1, ctc, prnt):
+    """
+    v2: Saturação por bases desejada (%)
+    v1: Saturação por bases atual do solo (%)
+    ctc: Capacidade de Troca Catiônica (cmolc/dm³)
+    prnt: Poder Relativo de Neutralização Total do calcário (%)
+    """
+    if prnt == 0:
+        return "Erro: PRNT não pode ser zero."
+        
+    nc = ((v2 - v1) * ctc) / prnt
+    return max(0.0, round(nc, 2))
+
+# Exemplo de uso:
+print(f"Necessidade de calcário: {calcular_calagem(v2=70, v1=40, ctc=10, prnt=80)} t/ha")
+class LoteBovino:
+    def __init__(self, id_lote, raca, quantidade):
+        self.id_lote = id_lote
+        self.raca = raca
+        self.quantidade = quantidade
+        self.pesagens = []
+
+    def registrar_peso_medio(self, data, peso):
+        self.pesagens.append({"data": data, "peso_medio": peso})
+
+    def relatorio(self):
+        print(f"Lote: {self.id_lote} | Raça: {self.raca} | Animais: {self.quantidade}")
+        for p in self.pesagens:
+            print(f" -> Data: {p['data']} | Peso Médio: {p['peso_medio']} kg")
+
+# Exemplo de uso:
+lote1 = LoteBovino("LOTE-01", "Nelore", 150)
+lote1.registrar_peso_medio("10/05/2026", 320)
+lote1.registrar_peso_medio("24/06/2026", 345)
+lote1.relatorio()
+import random
+
+def verificar_irrigacao(sensor_id):
+    # Simula a leitura percentual de um sensor de umidade
+    umidade_atual = round(random.uniform(20.0, 80.0), 1)
+    limite_critico = 40.0 # Acionar abaixo de 40%
+    
+    if umidade_atual < limite_critico:
+        return f"Sensor {sensor_id}: Umidade em {umidade_atual}% -> [LIGAR IRRIGAÇÃO]"
+    return f"Sensor {sensor_id}: Umidade em {umidade_atual}% -> [SISTEMA DESLIGADO]"
+
+# Exemplo de uso:
+print(verificar_irrigacao("PIVO-CENTRAL-03"))
