@@ -180,3 +180,20 @@ def consultar_limite_agroforte(cpf_produtor, codigo_parceiro):
 # Exemplo de uso:
 resultado = consultar_limite_agroforte("123.456.789-00", "AGF-AGRO26")
 print(resultado)
+def simular_relacao(producao_alimentos, demanda_tecnologia):
+    # O campo fornece alimentos e a cidade fornece tecnologia
+    if producao_alimentos > 50 and demanda_tecnologia > 50:
+        print("Status: Troca Equilibrada.")
+        print("O campo alimenta a cidade e a cidade fornece maquinário e tecnologia.")
+    elif producao_alimentos > 50:
+        print("Status: Superávit no Campo.")
+        print("O campo produz muito, mas a cidade precisa de mais tecnologia.")
+    elif demanda_tecnologia > 50:
+        print("Status: Superávit na Cidade.")
+        print("A cidade tem tecnologia, mas precisa de mais investimentos no campo.")
+    else:
+        print("Status: Baixa produção. Necessário fomento em ambos os setores.")
+
+# Exemplo de execução
+simular_relacao(80, 60)
+
