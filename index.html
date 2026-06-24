@@ -33,3 +33,34 @@ class CertificadoSustentavel:
 fazenda = CertificadoSustentavel("Sítio Verde", hectares_app=20, hectares_producao=80)
 fazenda.verificar_conformidade(car_ativo=True, adota_bioinsumos=True, emissao_zero=True)
 fazenda.exibir_codigo()
+class SistemaIrrigacao:
+    def __init__(self, umidade_minima, capacidade_reservatorio):
+        self.umidade_minima = umidade_minima
+        self.reservatorio = capacidade_reservatorio
+        self.ligado = False
+
+    def monitorar_solo(self, umidade_atual, previsao_chuva):
+        print(f"Umidade do solo: {umidade_atual}% | Previsão de chuva: {previsao_chuva}")
+        
+        if previsao_chuva == "Alta":
+            print("Economia de água ativada. Irrigação suspensa devido à previsão de chuva.")
+            self.desligar_sistema()
+        elif umidade_atual < self.umidade_minima:
+            print("Solo seco detectado. Acionando irrigação...")
+            self.ligar_sistema()
+            self.reservatorio -= 50  # Simulando gasto de água
+        else:
+            print("Umidade ideal. Sistema desligado.")
+            self.desligar_sistema()
+
+    def ligar_sistema(self):
+        self.ligado = True
+        print("Status: SISTEMA LIGADO.")
+
+    def desligar_sistema(self):
+        self.ligado = False
+        print("Status: SISTEMA DESLIGADO.")
+
+# Exemplo de Uso
+trator_inteligente = SistemaIrrigacao(umidade_minima=40, capacidade_reservatorio=1000)
+trator_inteligente.monitorar_solo(umidade_atual=35, previsao_chuva="Baixa")
