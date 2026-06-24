@@ -1,173 +1,35 @@
 # projetos-de-educa-o-digital
-<!DOCTYPE html>
-<htmbody {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
+import uuid
+import datetime
 
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+class CertificadoSustentavel:
+    def __init__(self, propriedade, hectares_app, hectares_producao):
+        self.id_rastreio = str(uuid.uuid4())[:8].upper()
+        self.propriedade = propriedade
+        self.hectares_app = hectares_app
+        self.hectares_producao = hectares_producao
+        self.data_emissao = datetime.date.today()
+        self.status_sustentabilidade = "Em análise"
 
-.profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #0056b3;
-}
+    def verificar_conformidade(self, car_ativo, adota_bioinsumos, emissao_zero):
+        # Regra de negócio simples para classificar o nível sustentável
+        if car_ativo and adota_bioinsumos and emissao_zero:
+            self.status_sustentabilidade = "OURO (Sustentabilidade Avançada)"
+        elif car_ativo and (adota_bioinsumos or emissao_zero):
+            self.status_sustentabilidade = "PRATA (Transição Ecológica)"
+        else:
+            self.status_sustentabilidade = "PENDENTE (Requer adequação)"
+        
+        return self.status_sustentabilidade
 
-header h1 {
-    margin-top: 15px;
-    font-size: 24px;
-    color: #333;
-}
+    def exibir_codigo(self):
+        print(f"--- CÓDIGO DE RASTREIO DO AGRO ---")
+        print(f"Código: AGRO-BR-{self.id_rastreio}")
+        print(f"Propriedade: {self.propriedade}")
+        print(f"Nível: {self.status_sustentabilidade}")
+        print(f"Emissão: {self.data_emissao}")
 
-header p {
-    color: #666;
-}
-
-section {
-    margin-top: 30px;
-}
-
-section h2 {
-    font-size: 20px;
-    color: #0056b3;
-    margin-bottom: 10px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.btn {
-    display: inline-block;
-    background-color: #0056b3;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #003d82;
-}<div class="container">
-        <header>
-            <img src="https://placeholder.com" alt="Foto de Perfil" class="profile-img">
-            <h1>Seu Nome</h1>
-            <p>Desenvolvedor Web / Criador de Conteúdo</p>
-        </header>
-
-        <section class="about">
-            <h2>Sobre Mim</h2>
-            <p>Olá! Sou apaixonado por tecnologia, design e construção de soluções digitais. Estou sempre aprendendo coisas novas e buscando novos desafios.</p>
-        </section>
-
-        <section class="contact">
-            <h2>Contato</h2>
-            <div class="social-links">
-                <a href="#" class="btn">LinkedIn</a>
-                <a href="#" class="btn">GitHub</a>
-                <a href="#" class="btn">Email</a>
-            </div>
-        </section>
-    </div>
-</body>
-</html>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
-
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #0056b3;
-}
-
-header h1 {
-    margin-top: 15px;
-    font-size: 24px;
-    color: #333;
-}
-
-header p {
-    color: #666;
-}
-
-section {
-    margin-top: 30px;
-}
-
-section h2 {
-    font-size: 20px;
-    color: #0056b3;
-    margin-bottom: 10px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.btn {
-    display: inline-block;
-    background-color: #0056b3;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #003d82;
-}
-import requests
-
-def consultar_limite_agroforte(cpf_produtor, codigo_parceiro):
-    url_api = "https://meuagroforte.com.br"
-    
-    headers = {
-        "Authorization": "Bearer SEU_TOKEN_DE_ACESSO",
-        "Content-Type": "application/json"
-    }
-    
-    payload = {
-        "cpf": cpf_produtor,
-        "referral_code": codigo_parceiro,
-        "tipo_producao": "avicultura"
-    }
-
-    
+# Exemplo de Uso
+fazenda = CertificadoSustentavel("Sítio Verde", hectares_app=20, hectares_producao=80)
+fazenda.verificar_conformidade(car_ativo=True, adota_bioinsumos=True, emissao_zero=True)
+fazenda.exibir_codigo()
