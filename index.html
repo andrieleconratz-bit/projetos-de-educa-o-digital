@@ -154,3 +154,29 @@ section h2 {
 .btn:hover {
     background-color: #003d82;
 }
+import requests
+
+def consultar_limite_agroforte(cpf_produtor, codigo_parceiro):
+    url_api = "https://meuagroforte.com.br"
+    
+    headers = {
+        "Authorization": "Bearer SEU_TOKEN_DE_ACESSO",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "cpf": cpf_produtor,
+        "referral_code": codigo_parceiro,
+        "tipo_producao": "avicultura"
+    }
+
+    response = requests.post(url_api, json=payload, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"erro": "Falha na conexão", "status": response.status_code}
+
+# Exemplo de uso:
+resultado = consultar_limite_agroforte("123.456.789-00", "AGF-AGRO26")
+print(resultado)
