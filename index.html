@@ -1,114 +1,47 @@
-# projetos-de-educa-o-digital
-import uuid
-import datetime
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agroforte | Soluções para o Campo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: #333; }
+        header { background-color: #2e7d32; color: #fff; padding: 20px 0; text-align: center; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .card { background-color: #f9f9f9; padding: 20px; width: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn { display: inline-block; padding: 10px 20px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 5px; margin-top: 15px; }
+        footer { background-color: #1b5e20; color: white; text-align: center; padding: 20px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
 
-class CertificadoSustentavel:
-    def __init__(self, propriedade, hectares_app, hectares_producao):
-        self.id_rastreio = str(uuid.uuid4())[:8].upper()
-        self.propriedade = propriedade
-        self.hectares_app = hectares_app
-        self.hectares_producao = hectares_producao
-        self.data_emissao = datetime.date.today()
-        self.status_sustentabilidade = "Em análise"
+    <header>
+        <h1>Agroforte</h1>
+        <p>Inovação e tecnologia para o produtor rural</p>
+    </header>
 
-    def verificar_conformidade(self, car_ativo, adota_bioinsumos, emissao_zero):
-        # Regra de negócio simples para classificar o nível sustentável
-        if car_ativo and adota_bioinsumos and emissao_zero:
-            self.status_sustentabilidade = "OURO (Sustentabilidade Avançada)"
-        elif car_ativo and (adota_bioinsumos or emissao_zero):
-            self.status_sustentabilidade = "PRATA (Transição Ecológica)"
-        else:
-            self.status_sustentabilidade = "PENDENTE (Requer adequação)"
-        
-        return self.status_sustentabilidade
+    <div class="container">
+        <h2>Nossas Soluções</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Crédito Rural</h3>
+                <p>Facilitamos o acesso a crédito desburocratizado para médios e pequenos produtores.</p>
+            </div>
+            <div class="card">
+                <h3>Monitoramento</h3>
+                <p>Acompanhe cotações, clima e o desenvolvimento da sua lavoura em tempo real.</p>
+            </div>
+            <div class="card">
+                <h3>Gestão de Estoque</h3>
+                <p>Cálculo de custos de carregamento de grãos e otimização de armazenagem.</p>
+            </div>
+        </div>
+    </div>
 
-    def exibir_codigo(self):
-        print(f"--- CÓDIGO DE RASTREIO DO AGRO ---")
-        print(f"Código: AGRO-BR-{self.id_rastreio}")
-        print(f"Propriedade: {self.propriedade}")
-        print(f"Nível: {self.status_sustentabilidade}")
-        print(f"Emissão: {self.data_emissao}")
+    <footer>
+        <p>&copy; 2026 Agroforte. Todos os direitos reservados.</p>
+    </footer>
 
-# Exemplo de Uso
-fazenda = CertificadoSustentavel("Sítio Verde", hectares_app=20, hectares_producao=80)
-fazenda.verificar_conformidade(car_ativo=True, adota_bioinsumos=True, emissao_zero=True)
-fazenda.exibir_codigo()
-class SistemaIrrigacao:
-    def __init__(self, umidade_minima, capacidade_reservatorio):
-        self.umidade_minima = umidade_minima
-        self.reservatorio = capacidade_reservatorio
-        self.ligado = False
-
-    def monitorar_solo(self, umidade_atual, previsao_chuva):
-        print(f"Umidade do solo: {umidade_atual}% | Previsão de chuva: {previsao_chuva}")
-        
-        if previsao_chuva == "Alta":
-            print("Economia de água ativada. Irrigação suspensa devido à previsão de chuva.")
-            self.desligar_sistema()
-        elif umidade_atual < self.umidade_minima:
-            print("Solo seco detectado. Acionando irrigação...")
-            self.ligar_sistema()
-            self.reservatorio -= 50  # Simulando gasto de água
-        else:
-            print("Umidade ideal. Sistema desligado.")
-            self.desligar_sistema()
-
-    def ligar_sistema(self):
-        self.ligado = True
-        print("Status: SISTEMA LIGADO.")
-
-    def desligar_sistema(self):
-        self.ligado = False
-        print("Status: SISTEMA DESLIGADO.")
-
-# Exemplo de Uso
-trator_inteligente = SistemaIrrigacao(umidade_minima=40, capacidade_reservatorio=1000)
-trator_inteligente.monitorar_solo(umidade_atual=35, previsao_chuva="Baixa")
-def calcular_calagem(v2, v1, ctc, prnt):
-    """
-    v2: Saturação por bases desejada (%)
-    v1: Saturação por bases atual do solo (%)
-    ctc: Capacidade de Troca Catiônica (cmolc/dm³)
-    prnt: Poder Relativo de Neutralização Total do calcário (%)
-    """
-    if prnt == 0:
-        return "Erro: PRNT não pode ser zero."
-        
-    nc = ((v2 - v1) * ctc) / prnt
-    return max(0.0, round(nc, 2))
-
-# Exemplo de uso:
-print(f"Necessidade de calcário: {calcular_calagem(v2=70, v1=40, ctc=10, prnt=80)} t/ha")
-class LoteBovino:
-    def __init__(self, id_lote, raca, quantidade):
-        self.id_lote = id_lote
-        self.raca = raca
-        self.quantidade = quantidade
-        self.pesagens = []
-
-    def registrar_peso_medio(self, data, peso):
-        self.pesagens.append({"data": data, "peso_medio": peso})
-
-    def relatorio(self):
-        print(f"Lote: {self.id_lote} | Raça: {self.raca} | Animais: {self.quantidade}")
-        for p in self.pesagens:
-            print(f" -> Data: {p['data']} | Peso Médio: {p['peso_medio']} kg")
-
-# Exemplo de uso:
-lote1 = LoteBovino("LOTE-01", "Nelore", 150)
-lote1.registrar_peso_medio("10/05/2026", 320)
-lote1.registrar_peso_medio("24/06/2026", 345)
-lote1.relatorio()
-import random
-
-def verificar_irrigacao(sensor_id):
-    # Simula a leitura percentual de um sensor de umidade
-    umidade_atual = round(random.uniform(20.0, 80.0), 1)
-    limite_critico = 40.0 # Acionar abaixo de 40%
-    
-    if umidade_atual < limite_critico:
-        return f"Sensor {sensor_id}: Umidade em {umidade_atual}% -> [LIGAR IRRIGAÇÃO]"
-    return f"Sensor {sensor_id}: Umidade em {umidade_atual}% -> [SISTEMA DESLIGADO]"
-
-# Exemplo de uso:
-print(verificar_irrigacao("PIVO-CENTRAL-03"))
+</body>
+</html>
